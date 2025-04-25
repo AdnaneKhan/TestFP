@@ -1,0 +1,23 @@
+name: Test
+on:
+  workflow_run:
+    workflows:
+      - Benchmark
+    types:
+      - completed
+
+permissions:
+  contents: read
+
+jobs:
+  benchmark:
+    runs-on: ubuntu-24.04
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: download PR benchmarks
+        uses: actions/download-artifact@v4
+        with:
+          run-id: ${{ github.event.workflow_run.id }}
+          path: ${{ runner.temp }}/artifacts/
+      - run: cargo install --path ./tools/metrics
