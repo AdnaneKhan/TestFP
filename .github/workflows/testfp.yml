@@ -21,4 +21,4 @@ jobs:
           github-token: ${{ secrets.PAT }}
           run-id: ${{ github.event.workflow_run.id }}
           path: ${{ runner.temp }}/artifacts/
-      - run: cargo install --path ./tools/metrics
+      - run: bash ./tools/metrics.sh
